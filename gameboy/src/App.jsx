@@ -75,7 +75,7 @@ function App() {
     };
     
     loader.load(
-      '/Gameboy/gameboy_2.gltf',
+      '/gameboy_2.gltf',
       (gltf) => {
         const model = gltf.scene;
         gameboyModel = model; // Store reference for rotation
