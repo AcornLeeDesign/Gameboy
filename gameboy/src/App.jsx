@@ -6,6 +6,7 @@ import './App.css';
 function App() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [showLoadingScreen, setShowLoadingScreen] = useState(true);
 
   useEffect(() => {
     const scene = new THREE.Scene();
@@ -57,8 +58,24 @@ function App() {
     let currentRotationX = 0;
     let currentRotationY = 0;
     
+    // Track actual loading progress separately from displayed progress
+    let actualProgress = 0;
+    let displayedProgress = 0;
+    
+    // Function to smoothly update displayed progress
+    const updateDisplayedProgress = () => {
+      if (displayedProgress < actualProgress) {
+        displayedProgress = Math.min(displayedProgress + 1, actualProgress);
+        setLoadingProgress(displayedProgress);
+        
+        if (displayedProgress < actualProgress) {
+          setTimeout(updateDisplayedProgress, 30); // Slow down to 30ms per increment
+        }
+      }
+    };
+    
     loader.load(
-      '/gameboy_2.gltf',
+      '/Gameboy/gameboy_2.gltf',
       (gltf) => {
         const model = gltf.scene;
         gameboyModel = model; // Store reference for rotation
@@ -76,26 +93,52 @@ function App() {
         
         scene.add(model);
 
-        // Model loaded successfully, hide loading
-        setIsLoading(false);
+        // Set actual progress to 100 and trigger smooth display update
+        actualProgress = 100;
+        updateDisplayedProgress();
+        
+        // Wait for displayed progress to reach 100, then wait 0.5s more before hiding
+        const checkProgressAndHide = () => {
+          if (displayedProgress >= 100) {
+            setTimeout(() => {
+              setIsLoading(false);
+              // Wait another 0.5 seconds before starting fade
+              setTimeout(() => {
+                setShowLoadingScreen(false);
+              }, 500);
+            }, 100);
+          } else {
+            setTimeout(checkProgressAndHide, 50);
+          }
+        };
+        checkProgressAndHide();
 
         // Render the scene once to display the model
         renderer.render(scene, camera);
       },
       (progress) => {
-        // Calculate loading percentage
-        const percentComplete = (progress.loaded / progress.total) * 100;
-        setLoadingProgress(Math.round(percentComplete));
+        // Calculate actual loading percentage with proper error handling
+        if (progress.total > 0) {
+          actualProgress = Math.round((progress.loaded / progress.total) * 100);
+        } else {
+          // If total is not available, use loaded bytes as a fallback
+          actualProgress = Math.min(Math.round(progress.loaded / 1000000 * 10), 99); // Rough estimate
+        }
+        
+        // Trigger smooth display update
+        updateDisplayedProgress();
+        
+        console.log('Loading progress:', progress.loaded, '/', progress.total, '=', actualProgress);
         
         // Log model size in MB when fully loaded
-        if (progress.loaded === progress.total) {
-          const sizeInMB = (progress.total / (1024 * 1024)).toFixed(2);
-          console.log(`📦 Model loaded! Size: ${sizeInMB} MB`);
+        if (progress.loaded === progress.total && progress.total > 0) {
+          console.log(`🕹️ Gameboy loaded!`);
         }
       },
       (error) => {
         console.error('Error loading Gameboy model:', error);
         setIsLoading(false); // Hide loading on error too
+        setShowLoadingScreen(false);
       }
     );
 
@@ -158,14 +201,15 @@ function App() {
   return (
     <div>
       <canvas id="myThreeJsCanvas"></canvas>
-      {isLoading && (
-        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-80 text-white p-5 rounded-lg text-center z-50">
-          <div>Loading Gameboy...</div>
-          <div className="mt-2">
-            <div className="w-48 h-2 bg-gray-300 rounded-md overflow-hidden">
-              <div className={`h-full bg-green-500 transition-all duration-300 ease-in-out ${loadingProgress > 0 ? 'w-full' : 'w-0'}`}></div>
-            </div>
-            <div style={{ marginTop: '5px' }}>{loadingProgress}%</div>
+      {showLoadingScreen && (
+        <div 
+          className={`fixed top-0 left-0 w-full h-full bg-black text-white text-center z-50 transition-opacity duration-1000 ${
+            isLoading ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{ fontFamily: 'Courier New, monospace' }}
+        >
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="text-6xl font-bold">{Math.min(loadingProgress || 0, 100)}</div>
           </div>
         </div>
       )}
