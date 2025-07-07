@@ -94,8 +94,8 @@ function App() {
     setLoadingProgress(100);
     setTimeout(() => {
       setIsLoading(false);
-      setTimeout(() => setShowLoadingScreen(false), 500);
-    }, 200);
+      setTimeout(() => setShowLoadingScreen(false), 100);
+    }, 300);
   };
 
   return (
