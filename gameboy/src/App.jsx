@@ -75,27 +75,28 @@ function App() {
   }, []);
 
   // Loading progress simulation (since useGLTF doesn't provide progress natively)
-  // We'll show a fake progress bar for 1.2s, then fade out
+  // We'll show a fake progress bar that adapts to actual loading time
   useEffect(() => {
     if (!isLoading) return;
     let progress = 0;
     const interval = setInterval(() => {
-      progress += Math.random() * 10 + 5;
-      setLoadingProgress(Math.min(100, Math.round(progress)));
-      if (progress >= 100) {
+      progress += Math.random() * 8 + 3; // Slower, more realistic progress
+      setLoadingProgress(Math.min(95, Math.round(progress))); // Only go to 95%, let model loading complete it
+      if (progress >= 95) {
         clearInterval(interval);
       }
-    }, 40);
+    }, 50); // Slightly slower interval
     return () => clearInterval(interval);
   }, [isLoading]);
 
   // When model is loaded, finish loading
   const handleModelLoaded = () => {
     setLoadingProgress(100);
+    // Much shorter delays for better responsiveness
     setTimeout(() => {
       setIsLoading(false);
-      setTimeout(() => setShowLoadingScreen(false), 100);
-    }, 300);
+      setTimeout(() => setShowLoadingScreen(false), 300); // Reduced from 500ms
+    }, 100); // Reduced from 200ms
   };
 
   return (
