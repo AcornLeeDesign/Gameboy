@@ -51,6 +51,10 @@ function App() {
     // Load GLB model
     const loader = new GLTFLoader();
     
+    // Set the resource path for the loader to handle texture loading correctly
+    const basePath = import.meta.env.BASE_URL || '';
+    loader.setResourcePath(basePath);
+    
     // Model rotation variables (outside loader for proper scope)
     let gameboyModel = null;
     let targetRotationX = 0;
@@ -75,7 +79,7 @@ function App() {
     };
     
     loader.load(
-      '/gameboy_2.gltf',
+      `${basePath}gameboy_2.gltf`,
       (gltf) => {
         const model = gltf.scene;
         gameboyModel = model; // Store reference for rotation
