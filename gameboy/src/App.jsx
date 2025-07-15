@@ -81,8 +81,8 @@ function App() {
     let progress = 0;
     const interval = setInterval(() => {
       progress += Math.random() * 8 + 3; // Slower, more realistic progress
-      setLoadingProgress(Math.min(95, Math.round(progress))); // Only go to 95%, let model loading complete it
-      if (progress >= 95) {
+      setLoadingProgress(Math.min(99, Math.round(progress))); // Only go to 99%, let model loading complete it
+      if (progress >= 99) {
         clearInterval(interval);
       }
     }, 50); // Slightly slower interval
