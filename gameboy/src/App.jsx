@@ -102,7 +102,7 @@ function App() {
   return (
     <div>
       <Canvas
-        id="myThreeJsCanvas"
+        className="block w-full h-full m-0 p-0"
         shadows
         dpr={Math.min(window.devicePixelRatio * 1.5, 2)}
         camera={{ fov: 50, near: 1, far: 1000, position: [0, 8, 0] }}
