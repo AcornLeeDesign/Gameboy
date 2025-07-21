@@ -5,7 +5,7 @@ function LoadingScreen({ isModelLoaded, onComplete }) {
   const [isLoading, setIsLoading] = useState(true);
   const [showLoadingScreen, setShowLoadingScreen] = useState(true);
 
-    // We'll show a fake progress counter that adapts to actual loading time
+  // We'll show a fake progress bar that adapts to actual loading time
   useEffect(() => {
     if (!isLoading) return;
     let progress = 0;
@@ -24,6 +24,7 @@ function LoadingScreen({ isModelLoaded, onComplete }) {
     if (!isModelLoaded) return;
     
     setLoadingProgress(100);
+    // Much shorter delays for better responsiveness
     setTimeout(() => {
       setIsLoading(false);
       setTimeout(() => {
