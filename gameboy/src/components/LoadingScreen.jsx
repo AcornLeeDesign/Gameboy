@@ -5,7 +5,6 @@ function LoadingScreen({ isModelLoaded, onComplete }) {
   const [isLoading, setIsLoading] = useState(true);
   const [showLoadingScreen, setShowLoadingScreen] = useState(true);
 
-  // Loading progress simulation (since useGLTF doesn't provide progress natively)
   // We'll show a fake progress bar that adapts to actual loading time
   useEffect(() => {
     if (!isLoading) return;
