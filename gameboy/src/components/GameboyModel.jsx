@@ -2,8 +2,8 @@ import { useRef, useState, useEffect, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Environment, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import LoadingScreen from './components/LoadingScreen';
-import './App.css';
+import LoadingScreen from './LoadingScreen';
+import "./GameboyModel.css";
 
 function GameboyModel({ onLoaded, mouse, ...props }) {
   const group = useRef();
