@@ -7,7 +7,10 @@ import './App.css';
 
 function GameboyModel({ onLoaded, mouse, ...props }) {
   const group = useRef();
-  const { scene } = useGLTF('/gameboy_2.gltf', true);
+  // const { scene } = useGLTF('/gameboy_2.gltf', true);
+  const base = import.meta.env.BASE_URL;
+  const url = base.endsWith('/') ? `${base}gameboy_2.gltf` : `${base}/gameboy_2.gltf`;
+  const { scene } = useGLTF(url, true);
   // Fix up circuitboard materials
   useEffect(() => {
     scene.traverse((object) => {
