@@ -3,7 +3,6 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Environment, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import LoadingScreen from './LoadingScreen';
-import "./GameboyModel.css";
 
 function GameboyModel({ onLoaded, mouse, ...props }) {
   const group = useRef();
@@ -81,9 +80,9 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="w-full h-screen m-0 p-0 overflow-hidden">
       <Canvas
-        className="block w-full h-full m-0 p-0"
+        className="block w-full h-full m-0 p-0 bg-black"
         shadows
         dpr={Math.min(window.devicePixelRatio * 1.5, 2)}
         camera={{ fov: 50, near: 1, far: 1000, position: [0, 8, 0] }}
