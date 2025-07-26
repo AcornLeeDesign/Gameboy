@@ -4,27 +4,46 @@ function LoadingScreen({ isModelLoaded, onComplete }) {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showLoadingScreen, setShowLoadingScreen] = useState(true);
+  const [artificialLoadingComplete, setArtificialLoadingComplete] = useState(false);
 
-  // We'll show a fake progress bar that adapts to actual loading time
+  // First: Complete artificial loading progress (0 to 100)
   useEffect(() => {
-    if (!isLoading) return;
+    if (!isLoading || artificialLoadingComplete) return;
+    
     let progress = 0;
     const interval = setInterval(() => {
       progress += Math.random() * 8 + 3; // Slower, more realistic progress
-      setLoadingProgress(Math.min(99, Math.round(progress))); // Only go to 99%, let model loading complete it
-      if (progress >= 99) {
+      setLoadingProgress(Math.min(100, Math.round(progress))); // Go all the way to 100%
+      
+      if (progress >= 100) {
         clearInterval(interval);
+        setArtificialLoadingComplete(true);
       }
     }, 50);
-    return () => clearInterval(interval);
-  }, [isLoading]);
-
-  // When model is loaded, finish loading
-  useEffect(() => {
-    if (!isModelLoaded) return;
     
-    setLoadingProgress(100);
-    // Much shorter delays for better responsiveness
+    return () => clearInterval(interval);
+  }, [isLoading, artificialLoadingComplete]);
+
+  // Second: When artificial loading is complete, check if model is loaded and fade away
+  useEffect(() => {
+    if (!artificialLoadingComplete) return;
+    
+    // If model is already loaded, fade away immediately
+    if (isModelLoaded) {
+      setTimeout(() => {
+        setIsLoading(false);
+        setTimeout(() => {
+          setShowLoadingScreen(false);
+          if (onComplete) onComplete();
+        }, 800); // fade out transition
+      }, 600); // wait before starting fade out transition
+    }
+  }, [artificialLoadingComplete, isModelLoaded, onComplete]);
+
+  // Third: If model loads after artificial loading is complete, fade away
+  useEffect(() => {
+    if (!artificialLoadingComplete || !isModelLoaded) return;
+    
     setTimeout(() => {
       setIsLoading(false);
       setTimeout(() => {
@@ -32,7 +51,7 @@ function LoadingScreen({ isModelLoaded, onComplete }) {
         if (onComplete) onComplete();
       }, 800); // fade out transition
     }, 600); // wait before starting fade out transition
-  }, [isModelLoaded, onComplete]);
+  }, [artificialLoadingComplete, isModelLoaded, onComplete]);
 
   if (!showLoadingScreen) return null;
 

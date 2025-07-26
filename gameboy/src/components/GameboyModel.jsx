@@ -1,15 +1,17 @@
 import { useRef, useState, useEffect, Suspense } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, Environment, Html } from '@react-three/drei';
-import * as THREE from 'three';
-import LoadingScreen from './LoadingScreen';
+import { Canvas, useThree } from '@react-three/fiber';
+import { useGLTF, PresentationControls, Environment, OrbitControls, Stage, Html } from '@react-three/drei'
+import InitialLoadingScreen from './InitialLoadingScreen';
+import GameboyScreen from './GameboyScreen';
 
-function GameboyModel({ onLoaded, mouse, ...props }) {
+function GameboyModel({ onLoaded, screenContent = 'default', ...props }) {
   const group = useRef();
+  const screenRef = useRef();
   // const { scene } = useGLTF('/gameboy_2.gltf', true);
   const base = import.meta.env.BASE_URL;
   const url = base.endsWith('/') ? `${base}gameboy_2.gltf` : `${base}/gameboy_2.gltf`;
   const { scene } = useGLTF(url, true);
+  
   // Fix up circuitboard materials
   useEffect(() => {
     scene.traverse((object) => {
@@ -19,35 +21,33 @@ function GameboyModel({ onLoaded, mouse, ...props }) {
           object.material.opacity = 1;
           object.material.transparent = false;
         }
+        // Find the screen mesh for positioning the HTML overlay
+        if (meshName.includes('screen') || meshName.includes('display')) {
+          screenRef.current = object;
+        }
       }
     });
     if (onLoaded) onLoaded();
   }, [scene, onLoaded]);
 
-  // Model rotation state
-  const targetRotation = useRef([0, 0]);
-  const currentRotation = useRef([0, 0]);
-
-  useFrame(() => {
-    // Easing
-    currentRotation.current[0] += (targetRotation.current[0] - currentRotation.current[0]) * 0.05;
-    currentRotation.current[1] += (targetRotation.current[1] - currentRotation.current[1]) * 0.05;
-    if (group.current) {
-      group.current.rotation.x = currentRotation.current[0];
-      group.current.rotation.y = currentRotation.current[1];
-    }
-  });
-
-  // Update target rotation from mouse
-  useEffect(() => {
-    if (!mouse) return;
-    const maxY = Math.PI / 24;
-    const maxX = Math.PI / 32;
-    targetRotation.current[1] = -mouse.x * maxY;
-    targetRotation.current[0] = -mouse.y * maxX;
-  }, [mouse]);
-
-  return <primitive ref={group} object={scene} {...props} />;
+  return (
+    <group ref={group}>
+      <primitive object={scene} {...props} />
+      <Html
+        position={[0, 0.5, 0.1]}
+        transform
+        occlude
+        distanceFactor={0.5}
+        style={{
+          width: '200px',
+          height: '160px',
+          pointerEvents: 'none'
+        }}
+      >
+        <GameboyScreen content={screenContent} />
+      </Html>
+    </group>
+  );
 }
 
 function CameraSetup() {
@@ -61,22 +61,15 @@ function CameraSetup() {
 }
 
 function App() {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const [isModelLoaded, setIsModelLoaded] = useState(false);
-
-  // Mouse move handler for rotation
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      const x = (event.clientX / window.innerWidth) * 2 - 1;
-      const y = -(event.clientY / window.innerHeight) * 2 + 1;
-      setMouse({ x, y });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  const [screenContent, setScreenContent] = useState('default');
 
   const handleModelLoaded = () => {
     setIsModelLoaded(true);
+    // Cycle through different screen states for demo
+    setTimeout(() => setScreenContent('loading'), 2000);
+    setTimeout(() => setScreenContent('menu'), 4000);
+    setTimeout(() => setScreenContent('game'), 6000);
   };
 
   return (
@@ -86,26 +79,31 @@ function App() {
         className="bg-black"
         shadows
         dpr={Math.min(window.devicePixelRatio * 1.5, 2)}
-        camera={{ fov: 50, near: 1, far: 1000, position: [0, 8, 0] }}
+        camera={{ fov: 50, position: [0, 6, 0] }}
       >
         <CameraSetup />
-        <ambientLight intensity={1} color={0x242424} />
-        <directionalLight
-          position={[4, 16, 0]}
-          intensity={1}
-          castShadow
-          shadow-mapSize-width={128}
-          shadow-mapSize-height={128}
-        />
         <Suspense fallback={null}>
-          <GameboyModel onLoaded={handleModelLoaded} mouse={mouse} />
+          <directionalLight 
+            position={[5, 5, 0]} 
+            intensity={1} 
+            castShadow 
+            shadow-mapSize-width={128}
+            shadow-mapSize-height={128}
+          />
+          <PresentationControls
+            global
+            zoom={0.8}
+            rotation={[0, 0, 0]}
+            polar={[-Math.PI / 4, Math.PI / 4]}
+            azimuth={[-Math.PI / 4, Math.PI / 4]}
+          >
+            <GameboyModel onLoaded={handleModelLoaded} screenContent={screenContent} />
+          </PresentationControls>
         </Suspense>
-        {/* Optionally add environment for better lighting */}
-        {/* <Environment preset="city" /> */}
       </Canvas>
-      <LoadingScreen 
+      <InitialLoadingScreen 
         isModelLoaded={isModelLoaded}
-        onComplete={() => console.log('Loading complete!')}
+        onComplete={() => console.log('gameboy loaded')}
       />
     </div>
   );
