@@ -53,7 +53,7 @@ function GameboyModel({ onLoaded, mouse, ...props }) {
 function CameraSetup() {
   const { camera, gl } = useThree();
   useEffect(() => {
-    camera.position.set(0, 8, 0);
+    camera.position.set(0, 6, 0);
     camera.lookAt(0, 0, 0);
     gl.setClearColor(0x000000, 1);
   }, [camera, gl]);
@@ -80,22 +80,22 @@ function App() {
   };
 
   return (
-    <div className="w-full h-screen m-0 p-0 overflow-hidden">
+    <div className="flex w-full h-full flex items-center justify-center m-0 p-0 overflow-hidden">
       <Canvas
-        className="block w-full h-full m-0 p-0 bg-black"
+        style={{ width: '100%', height: '100%' }}
+        className="bg-black"
         shadows
         dpr={Math.min(window.devicePixelRatio * 1.5, 2)}
         camera={{ fov: 50, near: 1, far: 1000, position: [0, 8, 0] }}
-        style={{ width: '100vw', height: '100vh', display: 'block', background: '#000' }}
       >
         <CameraSetup />
-        <ambientLight intensity={0.5} color={0x000000} />
+        <ambientLight intensity={1} color={0x242424} />
         <directionalLight
-          position={[2, 12, 0]}
+          position={[4, 16, 0]}
           intensity={1}
           castShadow
-          shadow-mapSize-width={2048}
-          shadow-mapSize-height={2048}
+          shadow-mapSize-width={128}
+          shadow-mapSize-height={128}
         />
         <Suspense fallback={null}>
           <GameboyModel onLoaded={handleModelLoaded} mouse={mouse} />

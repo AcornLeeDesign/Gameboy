@@ -15,7 +15,7 @@ function LoadingScreen({ isModelLoaded, onComplete }) {
       if (progress >= 99) {
         clearInterval(interval);
       }
-    }, 50); // Slightly slower interval
+    }, 50);
     return () => clearInterval(interval);
   }, [isLoading]);
 
@@ -30,8 +30,8 @@ function LoadingScreen({ isModelLoaded, onComplete }) {
       setTimeout(() => {
         setShowLoadingScreen(false);
         if (onComplete) onComplete();
-      }, 300); // Reduced from 500ms
-    }, 100); // Reduced from 200ms
+      }, 800); // fade out transition
+    }, 600); // wait before starting fade out transition
   }, [isModelLoaded, onComplete]);
 
   if (!showLoadingScreen) return null;

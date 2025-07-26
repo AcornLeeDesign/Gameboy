@@ -3,15 +3,18 @@
 :root {
   font-family: 'Scandia Line', sans-serif;
   line-height: 1.5;
-  font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #000000;
 
+  font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  height: 100vh;
+  width: 100vw;
 }
 
 a {
@@ -31,6 +34,10 @@ body {
   overflow: hidden;
 }
 
+p {
+  font-size: 1em;
+}
+
 /*
 @media (prefers-color-scheme: light) {
   :root {
@@ -48,9 +55,14 @@ body {
 
 @font-face {
   font-family: 'Scandia Line';
-  src: url('/fonts/scandia-line.otf') format('opentype'),
-       url('/fonts/scandia-line-medium.otf') format('opentype');
+  src: url('/fonts/scandia-line.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Scandia Line Medium';
+  src: url('/fonts/scandia-line-medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
