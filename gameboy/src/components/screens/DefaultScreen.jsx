@@ -12,10 +12,10 @@ function DefaultScreen() {
 
   return (
     <div className="text-center">
-      <div>GAMEBOY</div>
-      <div style={{ fontSize: '10px', marginTop: '4px' }}>NINTENDO</div>
-      <div style={{ fontSize: '8px', marginTop: '8px' }}>
-        {frame % 2 === 0 ? 'PRESS START' : '           '}
+      <div className="text-[3em]">GAMEBOY</div>
+      <div className="text-[1.4em] mt-[0.2em]">by aaron lee</div>
+      <div className={`text-[2em] mt-[1.8em] ${frame % 2 === 0 ? 'opacity-100' : 'opacity-0'}`}>
+        PRESS START
       </div>
     </div>
   );

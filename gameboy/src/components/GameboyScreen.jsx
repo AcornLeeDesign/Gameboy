@@ -1,19 +1,6 @@
 import { DefaultScreen, LoadingScreen, MenuScreen, GameScreen } from './screens';
 
 function GameboyScreen({ content = 'default' }) {
-  const renderContent = () => {
-    switch (content) {
-      case 'loading':
-        return <LoadingScreen />;
-      case 'game':
-        return <GameScreen />;
-      case 'menu':
-        return <MenuScreen />;
-      default:
-        return <DefaultScreen />;
-    }
-  };
-
   return (
     <div
       style={{
@@ -26,7 +13,7 @@ function GameboyScreen({ content = 'default' }) {
         alignItems: 'center',
         justifyContent: 'center',
         fontFamily: 'monospace',
-        fontSize: '12px',
+        fontSize: '1rem',
         color: '#0f380f',
         userSelect: 'none',
         pointerEvents: 'none',
@@ -34,7 +21,10 @@ function GameboyScreen({ content = 'default' }) {
         textShadow: '1px 1px 0px rgba(0,0,0,0.2)'
       }}
     >
-      {renderContent()}
+      {content === 'loading' && <LoadingScreen key="loading" />}
+      {content === 'game' && <GameScreen key="game" />}
+      {content === 'menu' && <MenuScreen key="menu" />}
+      {content === 'default' && <DefaultScreen key="default" />}
     </div>
   );
 }

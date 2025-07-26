@@ -12,9 +12,9 @@ function LoadingScreen() {
 
   return (
     <div className="text-center">
-      <div>LOADING...</div>
-      <div style={{ fontSize: '8px', marginTop: '4px' }}>
-        {frame % 2 === 0 ? '█' : '░'}
+      <div className="text-[1.5em]">LOADING...</div>
+      <div className={`text-[1.5em] mt-[0.3em] ${frame % 2 === 0 ? 'opacity-100' : 'opacity-0'}`}>
+        █
       </div>
     </div>
   );

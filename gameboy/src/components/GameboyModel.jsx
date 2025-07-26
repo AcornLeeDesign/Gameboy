@@ -12,7 +12,7 @@ function GameboyModel({ onLoaded, screenContent = 'default', ...props }) {
   const url = base.endsWith('/') ? `${base}gameboy_2.gltf` : `${base}/gameboy_2.gltf`;
   const { scene } = useGLTF(url, true);
   
-  // Fix up circuitboard materials
+  // Fix up circuitboard materials and find screen for tracking
   useEffect(() => {
     scene.traverse((object) => {
       if (object.isMesh && object.name) {
@@ -22,7 +22,7 @@ function GameboyModel({ onLoaded, screenContent = 'default', ...props }) {
           object.material.transparent = false;
         }
         // Find the screen mesh for positioning the HTML overlay
-        if (meshName.includes('screen') || meshName.includes('display')) {
+        if (meshName === 'Screen') {
           screenRef.current = object;
         }
       }
@@ -34,13 +34,14 @@ function GameboyModel({ onLoaded, screenContent = 'default', ...props }) {
     <group ref={group}>
       <primitive object={scene} {...props} />
       <Html
-        position={[0, 0.5, 0.1]}
+        position={[0, 0.2866, -1]}
+        rotation={[Math.PI / -2, 0, 0]}
         transform
         occlude
-        distanceFactor={0.5}
+        distanceFactor={1}
         style={{
-          width: '200px',
-          height: '160px',
+          width: '610px',
+          height: '800px',
           pointerEvents: 'none'
         }}
       >
@@ -66,16 +67,15 @@ function App() {
 
   const handleModelLoaded = () => {
     setIsModelLoaded(true);
-    // Cycle through different screen states for demo
-    setTimeout(() => setScreenContent('loading'), 2000);
-    setTimeout(() => setScreenContent('menu'), 4000);
-    setTimeout(() => setScreenContent('game'), 6000);
+    // Start with loading screen for 3 seconds, then go to default
+    setScreenContent('loading');
+    setTimeout(() => setScreenContent('default'), 3000);
   };
 
   return (
     <div className="flex w-full h-full flex items-center justify-center m-0 p-0 overflow-hidden">
       <Canvas
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: '100%', height: '100%', zIndex: 1 }}
         className="bg-black"
         shadows
         dpr={Math.min(window.devicePixelRatio * 1.5, 2)}

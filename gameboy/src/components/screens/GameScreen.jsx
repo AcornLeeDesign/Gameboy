@@ -12,13 +12,13 @@ function GameScreen() {
 
   return (
     <div className="text-center">
-      <div style={{ fontSize: '10px' }}>TETRIS</div>
-      <div style={{ fontSize: '8px', marginTop: '2px' }}>
+      <div className="text-[0.8em]">TETRIS</div>
+      <div className="text-[0.6em] mt-[0.2em]">
         {frame % 4 === 0 ? '■■■■' : 
          frame % 4 === 1 ? '■□□■' :
          frame % 4 === 2 ? '■□□■' : '■■■■'}
       </div>
-      <div style={{ fontSize: '8px', marginTop: '2px' }}>SCORE: 1234</div>
+      <div className="text-[0.6em] mt-[0.2em]">SCORE: 1234</div>
     </div>
   );
 }
