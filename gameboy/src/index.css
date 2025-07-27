@@ -1,12 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  font-family: 'Scandia Line', sans-serif;
+  font-family: 'Necto Mono';
   line-height: 1.5;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #000000;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -34,8 +33,12 @@ body {
   overflow: hidden;
 }
 
-p {
-  font-size: 1em;
+@font-face {
+  font-family: 'Necto Mono';
+  src: url('/fonts/NectoMono-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 /*
@@ -53,16 +56,3 @@ p {
 }
 */
 
-@font-face {
-  font-family: 'Scandia Line';
-  src: url('/fonts/scandia-line.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Scandia Line Medium';
-  src: url('/fonts/scandia-line-medium.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}

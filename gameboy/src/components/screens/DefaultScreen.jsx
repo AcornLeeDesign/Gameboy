@@ -14,7 +14,7 @@ function DefaultScreen() {
     <div className="text-center">
       <div className="text-[3em]">GAMEBOY</div>
       <div className="text-[1.4em] mt-[0.2em]">by aaron lee</div>
-      <div className={`text-[2em] mt-[1.8em] ${frame % 2 === 0 ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`text-[2em] mt-[1em] ${frame % 2 === 0 ? 'opacity-100' : 'opacity-0'}`}>
         PRESS START
       </div>
     </div>

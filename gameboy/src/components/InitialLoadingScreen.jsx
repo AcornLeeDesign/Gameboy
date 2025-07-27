@@ -57,13 +57,12 @@ function LoadingScreen({ isModelLoaded, onComplete }) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full bg-black text-white text-center z-50 transition-opacity duration-1000 ${
+      className={`fixed top-0 left-0 w-full h-full bg-white text-black text-center z-50 transition-opacity duration-1000 ${
         isLoading ? 'opacity-100' : 'opacity-0'
       }`}
-      style={{ fontFamily: 'Scandia Line, sans-serif' }}
     >
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <div className="text-6xl font-bold">{Math.min(loadingProgress || 0, 100)}</div>
+        <div className="text-xl">{Math.min(loadingProgress || 0, 100)}</div>
       </div>
     </div>
   );

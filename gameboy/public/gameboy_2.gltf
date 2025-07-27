@@ -1797,9 +1797,9 @@
 			"name":"dpad cylinder",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.08725616335868835,
-					0.08725616335868835,
-					0.08725616335868835,
+					1,
+					1,
+					1,
 					1
 				],
 				"metallicFactor":0,
@@ -1853,9 +1853,9 @@
 			"name":"button base.001",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.05557946115732193,
-					0.05557946115732193,
-					0.05557946115732193,
+					0.7,
+					0.7,
+					0.7,
 					1
 				],
 				"metallicFactor":0,
@@ -1896,9 +1896,9 @@
 			"name":"button base yellow",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.7780658006668091,
-					0.7257360219955444,
-					0.3775385618209839,
+					1,
+					1,
+					1,
 					1
 				],
 				"metallicFactor":0,
@@ -1928,9 +1928,9 @@
 			"name":"dpad ring",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.07245815545320511,
-					0.5371008515357971,
-					0.5741649866104126,
+					0.6,
+					0.5,
+					0.9,
 					1
 				],
 				"metallicFactor":0,
@@ -1947,9 +1947,9 @@
 			"name":"button base",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.6637957692146301,
-					0.6071516275405884,
-					0.3552323281764984,
+					1,
+					1,
+					1,
 					1
 				],
 				"metallicFactor":0,
@@ -1972,9 +1972,9 @@
 			"name":"speaker yellow",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.5149077773094177,
-					0.46777576208114624,
-					0.1529272496700287,
+					1,
+					1,
+					1,
 					1
 				],
 				"metallicFactor":0,
@@ -1986,9 +1986,9 @@
 			"name":"speaker light yellow",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.7119196653366089,
-					0.661432683467865,
-					0.3253030478954315,
+					1,
+					1,
+					1,
 					1
 				],
 				"metallicFactor":0,
@@ -2070,12 +2070,17 @@
 		},
 		{
 			"doubleSided":true,
+			"emissiveFactor":[
+				0.5,
+				0.6,
+				0.8
+			],
 			"name":"screen",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.800000011920929,
-					0.800000011920929,
-					0.800000011920929,
+					0.9,
+					0.95,
+					1.0,
 					1
 				],
 				"metallicFactor":0,
