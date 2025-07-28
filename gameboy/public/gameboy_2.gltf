@@ -1847,7 +1847,7 @@
 			"doubleSided":true,
 			"extensions":{
 				"KHR_materials_clearcoat":{
-					"clearcoatFactor":0.800000011920929
+					"clearcoatFactor":0.8
 				}
 			},
 			"name":"button base.001",

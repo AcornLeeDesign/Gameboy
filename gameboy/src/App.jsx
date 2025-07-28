@@ -1,16 +1,24 @@
+import { useState } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Suspense } from 'react';
 import GameboyModel from './components/GameboyModel.jsx';
+import GameboyScreen from './components/screens/GameboyScreen.jsx';
+import InitialLoadingScreen from './components/InitialLoadingScreen.jsx';
 import { GradientBackground } from "react-gradient-animation";
 
-
 function App() {
+  const [isModelLoaded, setIsModelLoaded] = useState(false);
+  const [screenContent, setScreenContent] = useState('loading');
+
+  const handleModelLoaded = () => {
+    setIsModelLoaded(true);
+    // Keep loading screen for 3 seconds, then go to default
+    setTimeout(() => setScreenContent('default'), 4000);
+  };
+
   return (
     <div className="min-h-screen min-w-full">
       <div className="m-2 h-[calc(100vh-1rem)] w-[calc(100vw-1rem)] flex flex-col">
-        {/* 
-        <header className="h-1/24 flex">
-          <h1 className="text-2xl">Gameboy</h1>
-        </header> 
-        */}
         <main className="h-full flex flex-col items-center justify-center">
           <GradientBackground
             count={5}
@@ -26,13 +34,27 @@ function App() {
             shapes={["c"]}
             style={{ opacity: 0.5 }}
           />
-          <GameboyModel />
+          <div className="flex w-full h-full flex items-center justify-center m-0 p-0 overflow-hidden">
+            <Canvas
+              style={{ width: '100%', height: '100%', zIndex: 1, touchAction: 'none' }}
+              shadows
+              dpr={Math.min(window.devicePixelRatio * 1.5, 2)}
+              camera={{ fov: 50, position: [0, 7, 0] }}
+            >
+              <Suspense fallback={null}>
+                <GameboyModel 
+                  onLoaded={handleModelLoaded} 
+                  screenContent={screenContent}
+                  GameboyScreenComponent={GameboyScreen}
+                />
+              </Suspense>
+            </Canvas>
+            <InitialLoadingScreen 
+              isModelLoaded={isModelLoaded}
+              onComplete={() => console.log('gameboy loaded')}
+            />
+          </div>
         </main>
-        {/*
-        <footer className="h-1/24 flex items-end">
-          <p className="text-[0.8em]">made with blender and cursor ai.</p>
-        </footer> 
-        */}
       </div> 
     </div>
   );

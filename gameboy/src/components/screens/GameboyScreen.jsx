@@ -1,4 +1,4 @@
-import { DefaultScreen, LoadingScreen } from './screens';
+import { DefaultScreen, LoadingScreen } from '../../utilities/BarrelExport';
 
 function GameboyScreen({ content = 'default' }) {
   return (
