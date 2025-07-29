@@ -18,25 +18,24 @@ function App() {
 
   return (
     <div className="min-h-screen min-w-full">
-      <div className="m-2 h-[calc(100vh-1rem)] w-[calc(100vw-1rem)] flex flex-col">
-        <main className="h-full flex flex-col items-center justify-center">
+      <main className="w-full h-screen">
           <GradientBackground
             count={5}
             size={{ min: 800, max: 1000, pulse: .2 }}
             speed={{ x: { min: 0.3, max: 1 }, y: { min: 0.3, max: 1 } }}
             colors={{
-              background: '#ffffff',
-              particles: ["#1e3a8a", "#1e40af", "#7c3aed"],
+              background: '#f8fafc',
+              particles: ["#334155", "#475569", "#64748b", "#94a3b8", "#7dd3fc", "#0ea5e9"],
             }}
             blending="overlay"
-            opacity={{ center: 0.3, edge: 0 }}
+            opacity={{ center: 0.4, edge: 0 }}
             skew={0}
             shapes={["c"]}
-            style={{ opacity: 0.5 }}
+            style={{ opacity: 0.6 }}
           />
-          <div className="flex w-full h-full flex items-center justify-center m-0 p-0 overflow-hidden">
+          <div className="w-full h-screen">
             <Canvas
-              style={{ width: '100%', height: '100%', zIndex: 1, touchAction: 'none' }}
+              style={{ zIndex: 1, touchAction: 'none' }}
               shadows
               dpr={Math.min(window.devicePixelRatio * 1.5, 2)}
               camera={{ fov: 50, position: [0, 7, 0] }}
@@ -55,7 +54,6 @@ function App() {
             />
           </div>
         </main>
-      </div> 
     </div>
   );
 }

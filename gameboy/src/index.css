@@ -56,3 +56,23 @@ body {
 }
 */
 
+/* D-pad styles 
+.gameboy-dpad {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.gameboy-dpad:hover {
+  background-color: #444 !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-2px);
+}
+
+.gameboy-dpad.pressed {
+  background-color: #222 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+  transform: translateY(1px);
+  border-color: #777 !important;
+}
+
+*/

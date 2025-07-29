@@ -1727,9 +1727,9 @@
 			"name":"button L",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.5711221098899841,
-					0.02955680340528488,
-					0.029556866735219955,
+					0.8,
+					0.2,
+					0.1,
 					1
 				],
 				"metallicFactor":0,
@@ -1741,9 +1741,9 @@
 			"name":"button R",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.6023334264755249,
-					0.030902018770575523,
-					0.030902191996574402,
+					0.8,
+					0.2,
+					0.1,
 					1
 				],
 				"metallicFactor":0,
@@ -1922,15 +1922,15 @@
 			"doubleSided":true,
 			"extensions":{
 				"KHR_materials_clearcoat":{
-					"clearcoatFactor":0.800000011920929
+					"clearcoatFactor":0.9
 				}
 			},
 			"name":"dpad ring",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
+					0.4,
 					0.6,
-					0.5,
-					0.9,
+					0.65,
 					1
 				],
 				"metallicFactor":0,
@@ -2014,13 +2014,13 @@
 			"name":"S button black sheet",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.017641840502619743,
-					0.01764197088778019,
-					0.017641963437199593,
+					0.6,
+					0.6,
+					0.6,
 					1
 				],
-				"metallicFactor":0,
-				"roughnessFactor":0.10000000149011612
+				"metallicFactor":1,
+				"roughnessFactor":0.5
 			}
 		},
 		{
@@ -2071,9 +2071,9 @@
 		{
 			"doubleSided":true,
 			"emissiveFactor":[
-				0.5,
-				0.6,
-				0.8
+				1.4,
+				1.6,
+				2.1
 			],
 			"name":"screen",
 			"pbrMetallicRoughness":{
@@ -2090,20 +2090,20 @@
 		{
 			"doubleSided":true,
 			"emissiveFactor":[
-				0.6000000238418579,
-				0.08863719457933072,
-				0.011991791531117402
+				1.5,
+				0.9,
+				0.5
 			],
 			"name":"led",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.800000011920929,
-					0.800000011920929,
-					0.800000011920929,
+					1,
+					1,
+					1,
 					1
 				],
 				"metallicFactor":0,
-				"roughnessFactor":0.5
+				"roughnessFactor":0
 			}
 		},
 		{

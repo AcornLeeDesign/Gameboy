@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useGLTF, PresentationControls, Html } from '@react-three/drei';
+import Dpad from '../hooks/Dpad';
 
 function GameboyModel({ onLoaded, screenContent = 'default', GameboyScreenComponent, ...props }) {
   const base = import.meta.env.BASE_URL;
@@ -28,8 +29,7 @@ function GameboyModel({ onLoaded, screenContent = 'default', GameboyScreenCompon
   return (
     <>
       <directionalLight 
-        position={[1, 4, 0]} 
-        rotation={[45 * Math.PI, 0, 0]}
+        position={[0.4, 2, 0]} 
         intensity={1} 
         castShadow 
         shadow-mapSize-width={128}
@@ -60,6 +60,7 @@ function GameboyModel({ onLoaded, screenContent = 'default', GameboyScreenCompon
         >
           <GameboyScreenComponent content={screenContent} />
         </Html>
+        <Dpad />
       </PresentationControls>
     </>
   );
