@@ -57,7 +57,7 @@ function LoadingScreen({ isModelLoaded, onComplete }) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full bg-white text-black text-center z-50 transition-opacity duration-1000 ${
+      className={`fixed top-0 left-0 w-full h-full text-black text-center z-50 transition-opacity duration-1000 bg-[#fafafa] ${
         isLoading ? 'opacity-100' : 'opacity-0'
       }`}
     >

@@ -11,7 +11,7 @@ function LoadingScreen() {
   }, []);
 
   return (
-    <div className="text-center">
+    <div className="flex justify-center items-center text-center">
       <div className="text-[1.5em]">LOADING...</div>
       <div className={`text-[1.5em] mt-[0.3em] ${frame % 2 === 0 ? 'opacity-100' : 'opacity-0'}`}>
         █

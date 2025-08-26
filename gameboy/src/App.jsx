@@ -4,7 +4,6 @@ import { Suspense } from 'react';
 import GameboyModel from './components/GameboyModel.jsx';
 import GameboyScreen from './components/screens/GameboyScreen.jsx';
 import InitialLoadingScreen from './components/InitialLoadingScreen.jsx';
-import { GradientBackground } from "react-gradient-animation";
 
 function App() {
   const [isModelLoaded, setIsModelLoaded] = useState(false);
@@ -13,26 +12,12 @@ function App() {
   const handleModelLoaded = () => {
     setIsModelLoaded(true);
     // Keep loading screen for 3 seconds, then go to default
-    setTimeout(() => setScreenContent('default'), 4000);
+    setTimeout(() => setScreenContent('footer'));
   };
 
   return (
     <div className="min-h-screen min-w-full">
       <main className="w-full h-screen">
-          <GradientBackground
-            count={5}
-            size={{ min: 800, max: 1000, pulse: .2 }}
-            speed={{ x: { min: 0.3, max: 1 }, y: { min: 0.3, max: 1 } }}
-            colors={{
-              background: '#f8fafc',
-              particles: ["#334155", "#475569", "#64748b", "#94a3b8", "#7dd3fc", "#0ea5e9"],
-            }}
-            blending="overlay"
-            opacity={{ center: 0.4, edge: 0 }}
-            skew={0}
-            shapes={["c"]}
-            style={{ opacity: 0.6 }}
-          />
           <div className="w-full h-screen">
             <Canvas
               style={{ zIndex: 1, touchAction: 'none' }}

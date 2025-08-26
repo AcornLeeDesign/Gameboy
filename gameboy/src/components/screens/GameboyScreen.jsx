@@ -1,4 +1,4 @@
-import { DefaultScreen, LoadingScreen } from '../../utilities/BarrelExport';
+import { Footer } from '../../utilities/BarrelExport';
 
 function GameboyScreen({ content = 'default' }) {
   return (
@@ -7,16 +7,11 @@ function GameboyScreen({ content = 'default' }) {
         width: '100%',
         height: '100%',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         fontSize: '1rem',
         color: '#0f380f',
-        userSelect: 'none',
-        pointerEvents: 'none',
       }}
     >
-      {content === 'loading' && <LoadingScreen key="loading" />}
-      {content === 'default' && <DefaultScreen key="default" />}
+      {content === 'footer' && <Footer key="footer" />}
     </div>
   );
 }
