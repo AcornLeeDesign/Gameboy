@@ -1,6 +1,8 @@
-import { Footer } from '../../utilities/BarrelExport';
+import { Footer, SmallScreen } from '../../utilities/BarrelExport';
 
 function GameboyScreen({ content = 'default' }) {
+  const isSmallScreen = content === 'smallscreen';
+
   return (
     <div
       style={{
@@ -9,9 +11,13 @@ function GameboyScreen({ content = 'default' }) {
         display: 'flex',
         fontSize: '1rem',
         color: '#0f380f',
+        // border: '2px solid black',
+        justifyContent: isSmallScreen ? 'center' : 'flex-start', // Center horizontally only if SmallScreen
+        alignItems: isSmallScreen ? 'center' : 'flex-start',   // Center vertically only if SmallScreen
       }}
     >
       {content === 'footer' && <Footer key="footer" />}
+      {isSmallScreen && <SmallScreen key="smallscreen" />}
     </div>
   );
 }

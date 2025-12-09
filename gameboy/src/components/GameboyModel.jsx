@@ -9,19 +9,43 @@ function GameboyModel({ onLoaded, screenContent = 'default', GameboyScreenCompon
   const meshRef = useRef();
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const prevWidthRef = useRef(window.innerWidth);
   
-  // Detect mobile devices
+  // Optimized mobile detection with threshold-crossing guard
   useEffect(() => {
+    const MOBILE_BREAKPOINT = 768;
+    
     const checkMobile = () => {
-      const userAgent = navigator.userAgent.toLowerCase();
-      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent) || 
-                            window.innerWidth <= 768;
-      setIsMobile(isMobileDevice);
+      const currentWidth = window.innerWidth;
+      const prevWidth = prevWidthRef.current;
+      
+      // Only update if crossing the breakpoint threshold
+      const wasMobile = prevWidth <= MOBILE_BREAKPOINT;
+      const isMobileNow = currentWidth <= MOBILE_BREAKPOINT;
+      
+      if (wasMobile !== isMobileNow) {
+        setIsMobile(isMobileNow);
+        console.log(isMobileNow ? "mobile" : "desktop");
+      }
+      
+      prevWidthRef.current = currentWidth;
     };
     
+    // Initial check
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    
+    // Throttled resize listener to avoid excessive calls
+    let resizeTimeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(checkMobile, 100);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
+    };
   }, []);
   
   // Global mousemove listener - only on desktop
@@ -82,23 +106,43 @@ function GameboyModel({ onLoaded, screenContent = 'default', GameboyScreenCompon
         {...props}
       >
         <primitive object={scene} />
+
+        {/* Main screen - displays primary content */}
         <Html
           position={[0, 0.55, -0.7]}
           rotation={[Math.PI / -2, 0, 0]}
           transform
           occlude
           distanceFactor={1}
-          raycast={isMobile ? undefined : () => null}
+          raycast={() => null}
           style={{
             width: '610px',
             height: '810px',
             WebkitUserSelect: 'none',
             MozUserSelect: 'none',
-            msUserSelect: 'none',
-            touchAction: isMobile ? 'auto' : 'none'
+            msUserSelect: 'none'
           }}
         >
-          <GameboyScreenComponent content={screenContent} />
+          <GameboyScreenComponent content="footer" />
+        </Html>
+        
+        {/* Small screen - displays loading animation */}
+        <Html
+          position={[0.0, 0.4, 0.61]}
+          rotation={[Math.PI / -2, 0, 0]}
+          transform
+          occlude
+          distanceFactor={1}
+          raycast={() => null}
+          style={{
+            width: '400px',
+            height: '100px',
+            WebkitUserSelect: 'none',
+            MozUserSelect: 'none',
+            msUserSelect: 'none'
+          }}
+        >
+          <GameboyScreenComponent content="smallscreen" />
         </Html>
       </group>
     </>
