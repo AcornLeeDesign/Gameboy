@@ -57,13 +57,13 @@ function LoadingScreen({ isModelLoaded, onComplete }) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full text-black text-center z-50 transition-opacity duration-1000 bg-[#fafafa] ${
+      className={`fixed top-0 left-0 w-full h-full text-white text-center z-50 transition-opacity duration-1000 bg-black ${
         isLoading ? 'opacity-100' : 'opacity-0'
       }`}
     >
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 space-y-4">
-        <p className="text-xl">[...Just a minute...]</p>
-        <div className="text-xl">{Math.min(loadingProgress || 0, 100)}</div>
+        <p className="text-l">[...Just a minute...]</p>
+        <div className="text-l">{Math.min(loadingProgress || 0, 100)}</div>
       </div>
     </div>
   );

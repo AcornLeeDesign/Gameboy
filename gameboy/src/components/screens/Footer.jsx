@@ -1,21 +1,39 @@
-function Footer() {
-  return (
-    <div className="flex flex-col items-start text-left pr-16 pb-16 pt-12 pl-16">
-      {/* <div className="text-[2.5em] p-8">Find me at:</div> */}
-      <div className="text-[2.5rem] space-y-8">
-        {/* <a href="https://www.instagram.com/aaron.so.u.know/?next=/" target="_blank" rel="noopener noreferrer" className="p-4 block">
-        [ instagram ]
-        </a>
-        <a href="https://x.com/acorn_lee_" target="_blank" rel="noopener noreferrer" className="p-4 block">
-        [ x ]
-        </a>
-        <a href="https://www.linkedin.com/in/aaaronlee/" target="_blank" rel="noopener noreferrer" className="p-4 block">
-        [ linkedin ]
-        </a> */}
-        <p>Imagining experiences to enhance curiosity and extend human imagination</p>
-      </div>
-    </div>
-  );
-}
+import { useEffect, useState } from "react";
 
-export default Footer; 
+export default function Footer({ texts, speed = 50, pause = 1000 }) {
+  const [textIndex, setTextIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const currentText = texts[textIndex];
+
+  useEffect(() => {
+    let timeout;
+
+    if (!isDeleting && charIndex < currentText.length) {
+      timeout = setTimeout(() => {
+        setCharIndex((prev) => prev + 1);
+      }, speed);
+    } else if (!isDeleting && charIndex === currentText.length) {
+      timeout = setTimeout(() => {
+        setIsDeleting(true);
+      }, pause);
+    } else if (isDeleting && charIndex > 0) {
+      timeout = setTimeout(() => {
+        setCharIndex((prev) => prev - 1);
+      }, speed / 2);
+    } else if (isDeleting && charIndex === 0) {
+      setIsDeleting(false);
+      setTextIndex((prev) => (prev + 1) % texts.length);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, currentText, speed, pause, texts.length]);
+
+  return (
+    <p className="text-5xl text-black"> 
+      {currentText.slice(0, charIndex)}
+      <span>|</span>
+    </p>
+  )
+}

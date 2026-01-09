@@ -24,7 +24,7 @@ function SmallScreen() {
   }, [isReversing]);
 
   return (
-    <div className="relative flex justify-center items-center h-10">
+    <div className="relative flex justify-center items-center h-10 text-black">
       {/* Center rectangle */}
       <div className="text-[1.5em] absolute">
         █

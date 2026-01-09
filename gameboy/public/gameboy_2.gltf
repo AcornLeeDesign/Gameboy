@@ -1754,7 +1754,7 @@
 			"doubleSided":true,
 			"extensions":{
 				"KHR_materials_clearcoat":{
-					"clearcoatFactor":0.22658610343933105
+					"clearcoatFactor":0.2
 				},
 				"KHR_materials_transmission":{
 					"transmissionFactor":1
@@ -1766,9 +1766,9 @@
 			},
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.6934062242507935,
-					0.6934062242507935,
-					0.6934062242507935,
+					0,
+					0,
+					0,
 					1
 				],
 				"metallicFactor":0,
@@ -2100,9 +2100,9 @@
 		{
 			"doubleSided":true,
 			"emissiveFactor":[
-				1.5,
-				0.9,
-				0.5
+				1.8,
+				1.2,
+				0.8
 			],
 			"name":"led",
 			"pbrMetallicRoughness":{
